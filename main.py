@@ -1,17 +1,30 @@
 import pygame
+import sys
+from settings import *
+from level import Level
 
-WIDTH, HEIGHT = 900, 500
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
+class Game:
+    def __init__(self) -> None:
+        # general setup
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
+        pygame.display.set_caption('Dennis Adventure')
+        self.clock = pygame.time.Clock()
+        self.level = Level()
 
-def main():
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-    pygame.quit()
+    def run(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            self.screen.fill('black')
+            self.level.run()
+            pygame.display.update()
+            self.clock.tick(FPS)
 
 
 if __name__ == '__main__':
-    main()
+    game = Game()
+    game.run()
